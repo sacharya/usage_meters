@@ -45,7 +45,7 @@ class ImageSizePollster(_Base):
     def get_samples(self, manager, cache, resources):
         for image in resources:
             yield sample.Sample(
-                name='image.size',
+                name='image.size.custom',
                 type=sample.TYPE_GAUGE,
                 unit='B',
                 volume=image.size,
@@ -54,6 +54,3 @@ class ImageSizePollster(_Base):
                 resource_id=image.id,
                 resource_metadata=self.extract_image_metadata(image),
             )
-
-if __name__ == '__main__':
-    print "Metdata keys: ", _METADATA_KEYS
