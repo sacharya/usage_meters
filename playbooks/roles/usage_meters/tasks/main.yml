@@ -1,0 +1,21 @@
+- name: Install usage_meters
+  pip:
+    name: git+https://github.com/absalon-james/usage_meters.git#egg=usage_meters
+    virtualenv: /openstack/venvs/ceilometer-{{ openstack_release }}
+  notify: Restart ceilometer services
+
+- name: Create config directory
+  file:
+    path: "/etc/usage_meters"
+    state: directory
+    owner: ceilometer
+    group: ceilometer
+
+- name: Template config
+  template:
+    src: usage_meters.yaml.j2
+    dest: "/etc/usage_meters/usage_meters.yaml"
+    owner: ceilometer
+    group: ceilometer
+    mode: "0644"
+  notify: Restart ceilometer services

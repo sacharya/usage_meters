@@ -1,0 +1,9 @@
+- name: Restart ceilometer services
+  service:
+    name: "{{ item.0.service_name }}"
+    state: "restarted"
+    pattern: "{{ item.0.service_name }}"
+  with_subelements:
+    - "{{ ceilometer_services }}"
+    - group
+  when: inventory_hostname in groups[item.1]

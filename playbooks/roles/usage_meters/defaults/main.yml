@@ -1,0 +1,15 @@
+## Service Name-Group Mapping
+ceilometer_services:
+  ceilometer-collector:
+    group:
+      - ceilometer_collector
+    service_name: ceilometer-collector
+  ceilometer-agent-notification:
+    group:
+      - ceilometer_agent_notification
+    service_name: ceilometer-agent-notification
+  ceilometer-polling:
+    group:
+      - ceilometer_agent_central
+      - ceilometer_agent_compute
+    service_name: ceilometer-polling

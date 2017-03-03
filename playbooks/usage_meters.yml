@@ -1,0 +1,5 @@
+- name: Install usage meters
+  hosts: ceilometer_all
+  user: root
+  roles:
+    - role: usage_meters
