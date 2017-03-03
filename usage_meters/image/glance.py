@@ -23,22 +23,32 @@ from usage_meters.config import load
 
 _CONFIG_FILE = '/etc/usage_meters/usage_meters.yaml'
 _CONFIG = load(_CONFIG_FILE)
-_METADATA_KEYS = ['status', 'name', 'created_at', 'updated_at']
+_STANDARD_KEYS = ['status', 'name', 'created_at', 'updated_at']
 try:
-    _METADATA_KEYS = _METADATA_KEYS + _CONFIG['image.size']['metadata_keys']
+    _METADATA_KEYS = _CONFIG['metadata_keys']
 except KeyError:
+    _METADATA_KEYS = []
     pass
 
 
 class _Base(plugin_base.PollsterBase):
 
+    # For ease of testing without mock
+    STANDARD_KEYS = _STANDARD_KEYS
+    METADATA_KEYS = _METADATA_KEYS
+
     @property
     def default_discovery(self):
         return 'images'
 
-    @staticmethod
-    def extract_image_metadata(image):
-        return dict((k, getattr(image, k, '')) for k in _METADATA_KEYS)
+    @classmethod
+    def extract_image_metadata(cls, image):
+        meta = dict((k, getattr(image, k)) for k in cls.STANDARD_KEYS)
+        meta.update(
+            dict(('properties.{}'.format(k), getattr(image, k, ''))
+            for k in cls.METADATA_KEYS)
+        )
+        return meta
 
 
 class ImageSizePollster(_Base):
