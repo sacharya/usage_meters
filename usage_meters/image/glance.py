@@ -19,6 +19,7 @@ from __future__ import absolute_import
 from ceilometer.agent import plugin_base
 from ceilometer import sample
 from usage_meters.config import load
+from usage_meters.utils import InsensitiveDict
 
 
 _CONFIG_FILE = '/etc/usage_meters/usage_meters.yaml'
@@ -44,8 +45,9 @@ class _Base(plugin_base.PollsterBase):
     @classmethod
     def extract_image_metadata(cls, image):
         meta = dict((k, getattr(image, k)) for k in cls.STANDARD_KEYS)
+        i_dict = InsensitiveDict(image)
         meta.update(
-            dict(('properties.{}'.format(k), getattr(image, k, ''))
+            dict(('properties.{}'.format(k), i_dict.get(k, ''))
             for k in cls.METADATA_KEYS)
         )
         return meta

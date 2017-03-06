@@ -1,4 +1,4 @@
-version = "0.1.1"
+version = "0.1.2"
 
 description = """
 Collection of ceilometer agent plugins designed to work with
