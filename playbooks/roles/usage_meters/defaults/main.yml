@@ -13,3 +13,8 @@ ceilometer_services:
       - ceilometer_agent_central
       - ceilometer_agent_compute
     service_name: ceilometer-polling
+
+usage_meters_metadata_keys:
+  - UAI
+
+usage_meters_pip_package: "git+https://github.com/absalon-james/usage_meters.git#egg=usage_meters"

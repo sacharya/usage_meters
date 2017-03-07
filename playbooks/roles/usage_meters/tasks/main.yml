@@ -1,6 +1,6 @@
 - name: Install usage_meters
   pip:
-    name: git+https://github.com/absalon-james/usage_meters.git#egg=usage_meters
+    name: "{{ usage_meters_pip_package }}"
     virtualenv: /openstack/venvs/ceilometer-{{ openstack_release }}
   notify: Restart ceilometer services
 

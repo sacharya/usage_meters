@@ -1,4 +1,4 @@
 metadata_keys:
-  - UAI
-  - license
-  - color
+{% for key in usage_meters_metadata_keys %}
+  - {{ key }}
+{% endfor %}
